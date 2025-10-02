@@ -29,6 +29,7 @@ void try_add_Node(Node* n, Node* into)
 
 int main()
 {
+    printf("start\n");
 
     try_add_Node(create_Node(10), list);
     try_add_Node(create_Node(11), list);
