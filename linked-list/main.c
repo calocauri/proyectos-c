@@ -34,6 +34,31 @@ void try_add_Node(Node* n, Node* into)
     }
 }
 
+void try_remove_node(){
+    if (list == NULL)
+    {
+        printf("List is empty\n");
+        return;
+    }
+    if(list->next == NULL)
+    {
+        printf("Single element");
+        Node *temp = list;
+        list = NULL;
+        free(temp);
+        return;
+    }
+    Node *penultimo = list;
+    while(penultimo->next->next)
+    {
+        penultimo = penultimo->next;
+    }
+    Node *temp = penultimo->next;
+    penultimo->next = NULL;
+    free(temp);
+    
+}
+
 void free_list(Node* li)
 {
     while(li){
@@ -46,13 +71,14 @@ void free_list(Node* li)
 int main()
 {
     printf("start\n");
-     //nodo centinela
+    printf("size:%d\n", sizeof(list));
     
     try_add_Node(create_Node(10), list);
     try_add_Node(create_Node(11), list);
     try_add_Node(create_Node(12), list);
     
     printf("Node0: %d\n", list->value);
+    // printf("Size Node0: %d\n", sizeof(*list));
     printf("Node1: %d\n", list->next->value);
     printf("Node2: %d\n", list->next->next->value);
     
