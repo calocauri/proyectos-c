@@ -4,46 +4,59 @@
 typedef struct Node
 {
     int value;
-    struct Node *ptr;
+    struct Node *next;
 } Node;
 
-Node *list;
 
 Node* create_Node(int val){
     Node *newNode = (Node*)malloc(sizeof(Node)); //reservamos memoria
     newNode->value = val;
-    newNode->ptr = NULL;
+    newNode->next = NULL;
     return newNode;
 }
 
+Node *list = NULL;
+
 void try_add_Node(Node* n, Node* into)
 {
-    if(into->ptr != NULL)
+    if(list == NULL)
     {
-        try_add_Node(n, into->ptr);
+        list = n;
+        return;
     }
-    else{
-        into->ptr = n;
+    if(into->next == NULL)
+    {
+        into->next = n;
+    }
+    else
+    {
+        try_add_Node(n, into->next);
+    }
+}
+
+void free_list(Node* li)
+{
+    while(li){
+        Node* temp = li;
+        li = li->next;
+        free(temp);
     }
 }
 
 int main()
 {
     printf("start\n");
-
+     //nodo centinela
+    
     try_add_Node(create_Node(10), list);
     try_add_Node(create_Node(11), list);
     try_add_Node(create_Node(12), list);
-
-    printf("Node0: %d\n", list->ptr->value);
-    printf("Node1: %d\n", list->ptr->ptr->value);
-    printf("Node2: %d\n", list->ptr->ptr->ptr->value);
-
-
-    while(list->ptr != NULL)
-    {
-        Node* n = list->ptr;
-        
-    }
+    
+    printf("Node0: %d\n", list->value);
+    printf("Node1: %d\n", list->next->value);
+    printf("Node2: %d\n", list->next->next->value);
+    
+    free_list(list);
+    printf("end\n");
     return 0;
 }
